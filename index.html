@@ -172,12 +172,6 @@
             border-right: 4px solid var(--green-bar);
         }
 
-        .danger-card {
-            border: 1px solid var(--primary-orange);
-        }
-        .danger-card .section-title { color: #ff3333; }
-        .danger-card .punish-item { border-right-color: #ff3333; }
-
         .add-btn {
             display: none;
             background-color: #2b4c16;
@@ -248,6 +242,9 @@
             display: inline-block !important;
         }
     </style>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 </head>
 <body>
 
@@ -264,230 +261,7 @@
     </div>
 
     <div class="grid-container" id="mainGridContainer">
-        
-        <!-- القائمة 1 -->
-        <div class="card">
-            <h3 class="card-title" contenteditable="false">مخالفات السلوك العام</h3>
-            <div class="section-title">المخالفات:</div>
-            <div class="item-list">
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">القتل العشوائي</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">الاستفزاز بالآمنة او تهديد بالأمانة</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">تخريب سيناريو</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">طلق عشوائي</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">سرقة بالأمانة</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">تلفيت</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-            </div>
-            <button class="add-btn" onclick="addNewItem(this, 'law-item')">+ إضافة مخالفة جديدة</button>
-
-            <div class="section-title punishment-title">المحاسبات والعقوبات:</div>
-            <div class="item-list punishment-list">
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الاولى: باند اسبوع</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الثانية: باند اسبوعين</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الثالثة: باند شهر</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الرابعة: باند بيرم</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-            </div>
-            <button class="add-btn" onclick="addNewItem(this, 'punish-item')">+ إضافة عقوبة جديدة</button>
-            <button class="delete-card-btn" onclick="this.parentElement.remove()">❌ حذف هذه القائمة بالكامل</button>
-        </div>
-
-        <!-- القائمة 2 -->
-        <div class="card">
-            <h3 class="card-title" contenteditable="false">مخالفات عالية الخطورة</h3>
-            <div class="section-title">المخالفات:</div>
-            <div class="item-list">
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">إعدام بدون ثلاث أدلة</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">السب (ياحمار أو كلب..)</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">استعمال ثغرات</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">تحلل أثناء سيناريو</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">نقل أموال بين الشخصيات</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">تخريب بالمناطق الآمنة</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">استعمال ألفاظ لا تتطابق مع الرول بلاي</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-            </div>
-            <button class="add-btn" onclick="addNewItem(this, 'law-item')">+ إضافة مخالفة جديدة</button>
-
-            <div class="section-title punishment-title">المحاسبات والعقوبات:</div>
-            <div class="item-list punishment-list">
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الاولى: باند 3 أيام</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الثانية: باند اسبوع</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الثالثة: باند اسبوعين</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الرابعة: باند بيرم</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-            </div>
-            <button class="add-btn" onclick="addNewItem(this, 'punish-item')">+ إضافة عقوبة جديدة</button>
-            <button class="delete-card-btn" onclick="this.parentElement.remove()">❌ حذف هذه القائمة بالكامل</button>
-        </div>
-
-        <!-- القائمة 3 -->
-        <div class="card">
-            <h3 class="card-title" contenteditable="false">مخالفات تمس العدالة والالتزام</h3>
-            <div class="section-title">المخالفات:</div>
-            <div class="item-list">
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">عدم تقدير الحياة</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">محاولة خطف غير واقعية ربط مواضيع خارج الرول</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">مقاومة شخصين أو أكثر</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">افتعال فايت</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">التواصل الغير شرعي تهديد بالأمانة</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">توكسك</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">اهانة جثة - اهانة مسقط</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">الترقيع دون سبب بحجه الفايت فقط</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-            </div>
-            <button class="add-btn" onclick="addNewItem(this, 'law-item')">+ إضافة مخالفة جديدة</button>
-
-            <div class="section-title punishment-title">المحاسبات والعقوبات:</div>
-            <div class="item-list punishment-list">
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الاولى: باند ثلاث أيام</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الثانية: باند أسبوع</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الثالثة: باند اسبوعين</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الرابعة: باند بيرم</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-            </div>
-            <button class="add-btn" onclick="addNewItem(this, 'punish-item')">+ إضافة عقوبة جديدة</button>
-            <button class="delete-card-btn" onclick="this.parentElement.remove()">❌ حذف هذه القائمة بالكامل</button>
-        </div>
-
-        <!-- القائمة 4 -->
-        <div class="card">
-            <h3 class="card-title" contenteditable="false">مخالفات جودة الرول بلاي (متوسطة)</h3>
-            <div class="section-title">المخالفات:</div>
-            <div class="item-list">
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">عدم توفر تصوير اخر 20 د</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">الصدم العشوائي</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">تهريب أشخاص لا تربطك بهم معرفة مسبقة</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">تحريك جثة التحدث أثناء التفتيش</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">تعطيل عمل الرقابة</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">ترقيع بالقرب من منطقه مزدحمه مثل المستشفى العامه والخ</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-            </div>
-            <button class="add-btn" onclick="addNewItem(this, 'law-item')">+ إضافة مخالفة جديدة</button>
-
-            <div class="section-title punishment-title">المحاسبات والعقوبات:</div>
-            <div class="item-list punishment-list">
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الاولى: ساعتين</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الثانية: يوم</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الثالثة: 3 أيام</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الرابعه: اسبوع</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-            </div>
-            <button class="add-btn" onclick="addNewItem(this, 'punish-item')">+ إضافة عقوبة جديدة</button>
-            <button class="delete-card-btn" onclick="this.parentElement.remove()">❌ حذف هذه القائمة بالكامل</button>
-        </div>
-
-        <!-- القائمة 5 -->
-        <div class="card">
-            <h3 class="card-title" contenteditable="false">مخالفات تسبب فوضى وتخريب سير اللعب</h3>
-            <div class="section-title">المخالفات:</div>
-            <div class="item-list">
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">التحدث خارج الرول مثل ( برفع فيك )</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">تشويه محتوى الرول بلاي - مثل استخدام ثغره</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">كلبشة في مناطق محصنة</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">سرقة سيارة أو لبس ملابس حكومه او عصابه</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-            </div>
-            <button class="add-btn" onclick="addNewItem(this, 'law-item')">+ إضافة مخالفة جديدة</button>
-
-            <div class="section-title punishment-title">المحاسبات والعقوبات:</div>
-            <div class="item-list punishment-list">
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الأولى: باند ثلاث أيام</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الثانية: باند أسبوع</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الثالثة: باند اسبوعين</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الرابعة: باند نهائي (بيرم)</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-            </div>
-            <button class="add-btn" onclick="addNewItem(this, 'punish-item')">+ إضافة عقوبة جديدة</button>
-            <button class="delete-card-btn" onclick="this.parentElement.remove()">❌ حذف هذه القائمة بالكامل</button>
-        </div>
-
-        <!-- القائمة 6 -->
-        <div class="card">
-            <h3 class="card-title" contenteditable="false">مخالفات السلوك والآداب (بسيطة)</h3>
-            <div class="section-title">المخالفات:</div>
-            <div class="item-list">
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">الاستفزاز بالآمنة او تهديد بالأمانة</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">مخالفات بسيطة تتعلق بتصرفات غير لائقة مثل التصبيع</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">استخدام سلاح أبيض بالمنطقة الآمنة</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">حمل سلاح بالآمنة</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">الخروج من الرول</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">عدم التحدث بصيغة الالم</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">النطح وهو حامل سلاح أو تيزر</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">ضرب في امنه</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-            </div>
-            <button class="add-btn" onclick="addNewItem(this, 'law-item')">+ إضافة مخالفة جديدة</button>
-
-            <div class="section-title punishment-title">المحاسبات والعقوبات:</div>
-            <div class="item-list punishment-list">
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الأولى: باند ثلاث ايام</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الثانية: باند أسبوع</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الثالثة: باند اسبوعين</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الرابعة: باند نهائي (بيرم)</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-            </div>
-            <button class="add-btn" onclick="addNewItem(this, 'punish-item')">+ إضافة عقوبة جديدة</button>
-            <button class="delete-card-btn" onclick="this.parentElement.remove()">❌ حذف هذه القائمة بالكامل</button>
-        </div>
-
-        <!-- القائمة 7 -->
-        <div class="card">
-            <h3 class="card-title" contenteditable="false">مخالفات الانضباط العام والسيرفر</h3>
-            <div class="section-title">المخالفات:</div>
-            <div class="item-list">
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">التخريب</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">التلويت خارج القسم</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">القتل في المنطقة الآمنة</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">مخالفة قوانين السيرفر</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-            </div>
-            <button class="add-btn" onclick="addNewItem(this, 'law-item')">+ إضافة مخالفة جديدة</button>
-
-            <div class="section-title punishment-title">المحاسبات والعقوبات:</div>
-            <div class="item-list punishment-list">
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الاولى: ثلاث ايام</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الثانية: اسبوع</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الثالثة: اسبوعين</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الرابعة: بيرم</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-            </div>
-            <button class="add-btn" onclick="addNewItem(this, 'punish-item')">+ إضافة عقوبة جديدة</button>
-            <button class="delete-card-btn" onclick="this.parentElement.remove()">❌ حذف هذه القائمة بالكامل</button>
-        </div>
-
-        <!-- القائمة 8 -->
-        <div class="card">
-            <h3 class="card-title" contenteditable="false">مخالفات متكررة مظهرة لسوء النية</h3>
-            <div class="section-title">المخالفات:</div>
-            <div class="item-list">
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">تخريب في المستشفى</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">تقديم اهانه لمسعف او موظفين الورش و المطعم</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-            </div>
-            <button class="add-btn" onclick="addNewItem(this, 'law-item')">+ إضافة مخالفة جديدة</button>
-
-            <div class="section-title punishment-title">المحاسبات والعقوبات:</div>
-            <div class="item-list punishment-list">
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الأولى: باند ثلاث ايام</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الثانية: باند أسبوع</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الثالثة: باند اسبوعين</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الرابعة: باند نهائي (بيرم)</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-            </div>
-            <button class="add-btn" onclick="addNewItem(this, 'punish-item')">+ إضافة عقوبة جديدة</button>
-            <button class="delete-card-btn" onclick="this.parentElement.remove()">❌ حذف هذه القائمة بالكامل</button>
-        </div>
-
-        <!-- القائمة 9 الباند النهائي القطعي -->
-        <div class="card danger-card">
-            <h3 class="card-title" contenteditable="false">مخالفات الباند النهائي القطعي</h3>
-            <div class="section-title">المخالفات الموجبة للشطب فوراً:</div>
-            <div class="item-list">
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">نشر سيرفرات آخر بشكل واضح</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">التحرش بجميع انواعه او التلميح لها</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">سب اداري في رومات الاداره</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">الهاك</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">تدبيل</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">القذف</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">الفاظ جنسية + عبر الايموت بسيرفر</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">لعن اباء او امهات</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">مداهمة القسم</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-                <div class="item-wrapper"><div class="law-item" contenteditable="false">ذكر سيرفرات</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-            </div>
-            <button class="add-btn" onclick="addNewItem(this, 'law-item')">+ إضافة مخالفة جديدة</button>
-
-            <div class="section-title punishment-title">المحاسبة القطعية:</div>
-            <div class="item-list punishment-list">
-                <div class="item-wrapper"><div class="punish-item" contenteditable="false">جميعها باند نهائي دون استدعاء</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
-            </div>
-            <button class="add-btn" onclick="addNewItem(this, 'punish-item')">+ إضافة عقوبة جديدة</button>
-            <button class="delete-card-btn" onclick="this.parentElement.remove()">❌ حذف هذه القائمة بالكامل</button>
-        </div>
-
+         <p style="text-align: center; color: var(--primary-orange); font-weight: bold;">جاري تحميل القوانين والقوائم من الداتابيز...</p>
     </div>
 
     <div class="global-add-container">
@@ -495,35 +269,51 @@
     </div>
 
     <script>
+        // ==========================================
+        // تم نقل وتحديث بيانات الـ Firebase الخاصة بك هنا بشكل صحيح 🚀
+        // ==========================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyCUuCbL4zhy6BZNT2J4j_y7A0bnqgDQM3Q",
+            authDomain: "banned-8d33b.firebaseapp.com",
+            databaseURL: "https://banned-8d33b-default-rtdb.firebaseio.com/",
+            projectId: "banned-8d33b",
+            storageBucket: "banned-8d33b.firebasestorage.app",
+            messagingSenderId: "447642928783",
+            appId: "1:447642928783:web:239ba1feaaa5c066f252fa",
+            measurementId: "G-M4HG087BZD"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
         const ADMIN_PASSWORD = "aaz1234axlo7"; 
         let isEditMode = false;
 
-        window.onload = function() {
-            if (localStorage.getItem('niceCityGridData_v3')) {
-                document.getElementById('mainGridContainer').innerHTML = localStorage.getItem('niceCityGridData_v3');
+        // القراءة والمزامنة التلقائية
+        database.ref('niceCityData').on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                if(data.gridHtml) document.getElementById('mainGridContainer').innerHTML = data.gridHtml;
+                if(data.title) document.getElementById('mainTitle').innerText = data.title;
+                if(data.subtitle) document.getElementById('mainSubtitle').innerText = data.subtitle;
+                setEditable(isEditMode);
+            } else {
+                initDefaultData();
             }
-            if (localStorage.getItem('niceCityTitle_v3')) {
-                document.getElementById('mainTitle').innerText = localStorage.getItem('niceCityTitle_v3');
-            }
-            if (localStorage.getItem('niceCitySubtitle_v3')) {
-                document.getElementById('mainSubtitle').innerText = localStorage.getItem('niceCitySubtitle_v3');
-            }
-        };
+        });
 
         function handleAdminMode() {
             const btn = document.getElementById('adminToggleBtn');
             
             if (!isEditMode) {
-                let passwordInput = prompt("الرجاء إدخال كلمة مرور الإدارة المحدثة للتعديل:");
+                let passwordInput = prompt("الرجاء إدخال كلمة مرور الإدارة للتعديل (aaz1234axlo7):");
                 
                 if (passwordInput === ADMIN_PASSWORD) {
                     isEditMode = true;
                     document.body.classList.add('edit-active');
-                    btn.innerText = "حفظ وإغلاق التعديل 💾";
+                    btn.innerText = "حفظ ونشر التعديل للجميع 🌍💾";
                     btn.classList.add('active');
-                    
                     setEditable(true);
-                    alert("🔓 وضع التعديل نشط الآن!");
                 } else {
                     alert("❌ كلمة المرور خاطئة!");
                 }
@@ -532,14 +322,17 @@
                 document.body.classList.remove('edit-active');
                 btn.innerText = "دخول الإدارة 🔐";
                 btn.classList.remove('active');
-                
                 setEditable(false);
 
-                localStorage.setItem('niceCityGridData_v3', document.getElementById('mainGridContainer').innerHTML);
-                localStorage.setItem('niceCityTitle_v3', document.getElementById('mainTitle').innerText);
-                localStorage.setItem('niceCitySubtitle_v3', document.getElementById('mainSubtitle').innerText);
-                
-                alert("💾 تم حفظ التغييرات بنجاح!");
+                database.ref('niceCityData').set({
+                    gridHtml: document.getElementById('mainGridContainer').innerHTML,
+                    title: document.getElementById('mainTitle').innerText,
+                    subtitle: document.getElementById('mainSubtitle').innerText
+                }).then(() => {
+                    alert("🌍 تم التحديث والنشر بنجاح لجميع اللاعبين والموقع!");
+                }).catch((error) => {
+                    alert("خطأ في حفظ البيانات: " + error.message);
+                });
             }
         }
 
@@ -580,82 +373,66 @@
                 <h3 class="card-title" contenteditable="true">اسم القائمة الجديدة</h3>
                 <div class="section-title">المخالفات:</div>
                 <div class="item-list">
-                    <div class="item-wrapper"><div class="law-item" contenteditable="true">مخالفة تجريبية</div><button class="delete-btn" style="display:inline-block;" onclick="this.parentElement.remove()">❌</button></div>
+                    <div class="item-wrapper"><div class="law-item" contenteditable="true">مخالفة جديدة</div><button class="delete-btn" style="display:inline-block;" onclick="this.parentElement.remove()">❌</button></div>
                 </div>
-                <button class="add-btn" style="display:inline-block;" onclick="addNewItem(this, 'law-item')">+ إضافة مخالفة جديدة</button>
+                <button class="add-btn" style="display:inline-block;" onclick="addNewItem(this, 'law-item')">+ إضافة مخالفة</button>
 
-                <div class="section-title punishment-title">المحاسبات والعقوبات:</div>
+                <div class="section-title punishment-title">العقوبات:</div>
                 <div class="item-list punishment-list">
-                    <div class="item-wrapper"><div class="punish-item" contenteditable="true">العقوبة التجريبية</div><button class="delete-btn" style="display:inline-block;" onclick="this.parentElement.remove()">❌</button></div>
+                    <div class="item-wrapper"><div class="punish-item" contenteditable="true">العقوبة...</div><button class="delete-btn" style="display:inline-block;" onclick="this.parentElement.remove()">❌</button></div>
                 </div>
-                <button class="add-btn" style="display:inline-block;" onclick="addNewItem(this, 'punish-item')">+ إضافة عقوبة جديدة</button>
-                <button class="delete-card-btn" style="display:inline-block;" onclick="this.parentElement.remove()">❌ حذف هذه القائمة بالكامل</button>
+                <button class="add-btn" style="display:inline-block;" onclick="addNewItem(this, 'punish-item')">+ إضافة عقوبة</button>
+                <button class="delete-card-btn" style="display:inline-block;" onclick="this.parentElement.remove()">❌ حذف هذه القائمة</button>
             `;
-            
             grid.appendChild(newCard);
+            setEditable(true);
         }
 
-        // ذكاء البحث الفوري لربط المخالفة بالعقوبة مباشرة
         function searchLaws() {
             let input = document.getElementById('searchInput').value.toLowerCase();
             let cards = document.getElementsByClassName('card');
             
             if (input.trim() === "") {
-                // إذا كان البحث فارغاً أظهر كل الكروت وكل العناصر بشكل طبيعي
                 for (let i = 0; i < cards.length; i++) {
                     cards[i].style.display = "";
                     let wrappers = cards[i].getElementsByClassName('item-wrapper');
-                    for(let j=0; j<wrappers.length; j++) {
-                        wrappers[j].style.display = "";
-                    }
-                    let punTitle = cards[i].querySelector('.punishment-title');
-                    let punList = cards[i].querySelector('.punishment-list');
-                    if(punTitle) punTitle.style.display = "";
-                    if(punList) punList.style.display = "";
+                    for(let j=0; j<wrappers.length; j++) wrappers[j].style.display = "";
                 }
                 return;
             }
 
-            // تفعيل فلترة البحث الذكية
             for (let i = 0; i < cards.length; i++) {
                 let matchInCard = false;
                 let wrappers = cards[i].getElementsByClassName('item-wrapper');
                 
-                // إخفاء أو إظهار المخالفات بناءً على كلمة البحث
                 for (let j = 0; j < wrappers.length; j++) {
                     let lawItem = wrappers[j].querySelector('.law-item');
-                    if (lawItem) {
-                        if (lawItem.innerText.toLowerCase().includes(input)) {
-                            wrappers[j].style.display = "";
-                            matchInCard = true; // وجدنا مخالفة مطابقة في هذا الكرت
-                        } else {
-                            wrappers[j].style.display = "none";
-                        }
-                    } else {
-                        // كخيار افتراضي نقوم بإخفاء العقوبات بشكل فردي مؤقتاً
+                    if (lawItem && lawItem.innerText.toLowerCase().includes(input)) {
+                        wrappers[j].style.display = "";
+                        matchInCard = true;
+                    } else if (lawItem) {
                         wrappers[j].style.display = "none";
                     }
                 }
-
-                // إذا الكرت يحتوي على المخالفة المطلوبة، نقوم بإظهار الكرت بالكامل مع مدد عقوباته
-                if (matchInCard) {
-                    cards[i].style.display = "";
-                    
-                    // إظهار قسم العقوبات الخاص بهذا الكرت لرؤية مدد الباند فوراً
-                    let punTitle = cards[i].querySelector('.punishment-title');
-                    let punList = cards[i].querySelector('.punishment-list');
-                    if(punTitle) punTitle.style.display = "";
-                    if(punList) {
-                        punList.style.display = "";
-                        let punishWrappers = punList.getElementsByClassName('item-wrapper');
-                        for(let k=0; k<punishWrappers.length; k++) {
-                            punishWrappers[k].style.display = ""; // تفتيح وعرض مدد العقوبات بالكامل
-                        }
-                    }
-                } else {
-                    cards[i].style.display = "none"; // إخفاء الكرت تماماً إذا لم تتواجد به المخالفة
-                }
+                cards[i].style.display = matchInCard ? "" : "none";
             }
+        }
+
+        function initDefaultData() {
+            document.getElementById('mainGridContainer').innerHTML = `
+                <div class="card">
+                    <h3 class="card-title" contenteditable="false">مجموعة القوانين الأساسية</h3>
+                    <div class="section-title">المخالفات:</div>
+                    <div class="item-list">
+                        <div class="item-wrapper"><div class="law-item" contenteditable="false">القتل العشوائي (RDM)</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
+                    </div>
+                    <button class="add-btn" onclick="addNewItem(this, 'law-item')">+ إضافة مخالفة</button>
+                    <div class="section-title punishment-title">العقوبات:</div>
+                    <div class="item-list punishment-list">
+                        <div class="item-wrapper"><div class="punish-item" contenteditable="false">المرة الأولى: باند أسبوع</div><button class="delete-btn" onclick="this.parentElement.remove()">❌</button></div>
+                    </div>
+                    <button class="add-btn" onclick="addNewItem(this, 'punish-item')">+ إضافة عقوبة</button>
+                </div>`;
         }
     </script>
 </body>

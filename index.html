@@ -235,11 +235,16 @@
             outline: 2px dashed var(--primary-orange) !important;
             background-color: rgba(255, 85, 0, 0.1) !important;
         }
-        .edit-active .add-btn, 
-        .edit-active .delete-btn, 
-        .edit-active .delete-card-btn,
-        .edit-active .add-card-global-btn {
-            display: inline-block !important;
+     .add-btn, .delete-btn, .delete-card-btn, .add-card-global-btn {
+    display: none !important;
+}
+
+body.edit-active .add-btn,
+body.edit-active .delete-btn,
+body.edit-active .delete-card-btn,
+body.edit-active .add-card-global-btn {
+    display: inline-block !important;
+}
         }
     </style>
 

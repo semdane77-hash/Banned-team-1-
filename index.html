@@ -306,40 +306,40 @@ body.edit-active .add-card-global-btn {
                 initDefaultData();
             }
         });
+ function handleAdminMode() {
+    const btn = document.getElementById('adminToggleBtn');
+    // كلمة السر الجديدة والمعقدة التي اخترتها لحماية السيرفر
+    const SECURE_PASSWORD = `aaxsssaolofll?>birpposa0*&6887xz7729087x7/)%%%@CXMJHLJj!~~--`;
 
-        function handleAdminMode() {
-            const btn = document.getElementById('adminToggleBtn');
-            
-            if (!isEditMode) {
-                let passwordInput = prompt("الرجاء إدخال كلمة مرور الإدارة للتعديل:");
-                
-                if (passwordInput === ADMIN_PASSWORD) {
-                    isEditMode = true;
-                    document.body.classList.add('edit-active');
-                    btn.innerText = "حفظ ونشر التعديل للجميع 🌍💾";
-                    btn.classList.add('active');
-                    setEditable(true);
-                } else {
-                    alert("❌ كلمة المرور خاطئة!");
-                }
-            } else {
-                isEditMode = false;
-                document.body.classList.remove('edit-active');
-                btn.innerText = "دخول الإدارة 🔐";
-                btn.classList.remove('active');
-                setEditable(false);
+    if (!isEditMode) {
+        let passwordInput = prompt("الرجاء إدخل كلمة مرور الإدارة للتعديل:");
 
-                database.ref('niceCityData').set({
-                    gridHtml: document.getElementById('mainGridContainer').innerHTML,
-                    title: document.getElementById('mainTitle').innerText,
-                    subtitle: document.getElementById('mainSubtitle').innerText
-                }).then(() => {
-                    alert("🌍 تم التحديث والنشر بنجاح لجميع اللاعبين والموقع!");
-                }).catch((error) => {
-                    alert("خطأ في حفظ البيانات: " + error.message);
-                });
-            }
+        if (passwordInput === SECURE_PASSWORD) {
+            isEditMode = true;
+            document.body.classList.add('edit-active');
+            btn.innerText = "💾 حفظ ونشر التعديل للجميع";
+            btn.classList.add('active');
+            setEditable(true);
+        } else {
+            alert("❌ كلمة المرور خاطئة!");
         }
+    } else {
+        // يتم الحفظ فقط وبأمان كامل
+        database.ref('niceCityData').set({
+            gridHtml: document.getElementById('mainGridContainer').innerHTML,
+            title: document.getElementById('mainTitle').innerText,
+            subtitle: document.getElementById('mainSubtitle').innerText
+        }).then(() => {
+            isEditMode = false;
+            document.body.classList.remove('edit-active');
+            btn.innerText = "🔒 دخول الإدارة";
+            btn.classList.remove('active');
+            setEditable(false);
+            alert("✅ تم حفظ ونشر التعديلات بنجاح!");
+        }).catch((error) => {
+            alert("❌ خطأ في حفظ البيانات: " + error.message);
+        });
+    }
 
         function setEditable(state) {
             const editableElements = document.querySelectorAll('.card-title, .law-item, .punish-item, #mainTitle, #mainSubtitle');
